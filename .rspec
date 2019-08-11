@@ -1,1 +1,8 @@
+# Enable color in the test output
+--color
+
+# Require spec_helper automatically in your *_spec.rb
 --require spec_helper
+
+# * SEE MORE INFO *
+# 'https://github.com/rspec/rspec/wiki#configure-rspec'
