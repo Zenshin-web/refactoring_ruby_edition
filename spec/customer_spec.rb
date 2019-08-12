@@ -20,4 +20,13 @@ RSpec.describe Customer do
       expect(customer.statement).to eq receipt
     end
   end
+
+  describe '#html_statement' do
+    before { customer.add_rental(rental) }
+
+    it '顧客の借りた映画のレシート情報がhtmlで返ること' do
+      receipt = "<h1>Rental Record for <em>#{customer.name}</em></h1>\n<p>\t#{movie.title}: 9.5<br></p>\n<p>You owe <em>9.5</em></p>\n<p>On this rental You earned <em>1</em> frequent renter points</p>"
+      expect(customer.html_statement).to eq receipt
+    end
+  end
 end

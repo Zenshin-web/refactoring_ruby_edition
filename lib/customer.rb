@@ -22,6 +22,18 @@ class Customer
     result
   end
 
+  def html_statement
+    result = "<h1>Rental Record for <em>#{@name}</em></h1>\n"
+    @rentals.each do |element|
+      # このレンタルの料金を表示
+      result += "<p>\t" + element.movie.title + ": " + element.charge.to_s + "<br></p>\n"
+    end
+    # フッター行を追加
+    result += "<p>You owe <em>#{total_charge}</em></p>\n"
+    result += "<p>On this rental You earned " + "<em>#{total_frequent_renter_points}</em> " + "frequent renter points</p>"
+    result
+  end
+
   private
 
   def total_frequent_renter_points
