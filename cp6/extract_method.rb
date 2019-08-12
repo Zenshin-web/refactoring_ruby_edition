@@ -1,15 +1,11 @@
-def print_owing
+def print_owing(previous_amount)
+  outstanding = previous_amount * 1.2
   print_banner
-  outstanding = calculate_outstanding
-  print_details(outstanding)
-end
-
-def calculate_outstanding
-  outstanding = 0.0
+  # calculate outstanding
   @orders.each do |order|
     outstanding += order.amount
   end
-  outstanding
+  print_details outstanding
 end
 
 def print_details(outstanding)
