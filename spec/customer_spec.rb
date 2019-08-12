@@ -1,7 +1,7 @@
 require 'customer.rb'
 
 RSpec.describe Customer do
-  let!(:movie) { Movie.new('memento', 0) }
+  let!(:movie) { Movie.new('memento', RegularPrice.new) }
   let!(:rental) { Rental.new(movie, 7) }
   let!(:customer_name) { 'ken' }
   let!(:customer) { Customer.new(customer_name) }

@@ -1,8 +1,8 @@
 require 'rental.rb'
 
 RSpec.describe Rental do
-  let(:price_code) { Movie::REGULAR }
-  let!(:movie) { Movie.new('memento', price_code) }
+  let(:price) { RegularPrice.new }
+  let!(:movie) { Movie.new('memento', price) }
   let!(:days_rented) { 7 }
   let!(:rental) { Rental.new(movie, days_rented) }
 
@@ -20,7 +20,7 @@ RSpec.describe Rental do
 
   describe '#charge' do
     context '借りる映画の種類が「一般」で、貸し出し日数が2日のとき' do
-      let!(:price_code) { Movie::REGULAR }
+      let!(:price) { RegularPrice.new }
       let!(:days_rented) { 2 }
 
       it 'レンタル料金が2ドルになること' do
@@ -30,7 +30,7 @@ RSpec.describe Rental do
     end
 
     context '借りる映画の種類が「一般」で、貸し出し日数が7日のとき' do
-      let!(:price_code) { Movie::REGULAR }
+      let!(:price) { RegularPrice.new }
       let!(:days_rented) { 7 }
 
       it 'レンタル料金が9.5ドルになること' do
@@ -40,7 +40,7 @@ RSpec.describe Rental do
     end
 
     context '借りる映画の種類が「新作」のとき' do
-      let!(:price_code) { Movie::NEW_RELEASE }
+      let!(:price) { NewReleasePrice.new }
 
       it 'レンタル料金が21ドルになること' do
         # NOTE: 計算式は 'days_rented * 3'
@@ -49,7 +49,7 @@ RSpec.describe Rental do
     end
 
     context '借りる映画の種類が「子供向け」で、貸し出し日数が3日のとき' do
-      let!(:price_code) { Movie::CHILDREN }
+      let!(:price) { ChildrenPrice.new }
       let!(:days_rented) { 3 }
 
       it 'レンタル料金が1.5ドルになること' do
@@ -59,7 +59,7 @@ RSpec.describe Rental do
     end
 
     context '借りる映画の種類が「子供向け」で、貸し出し日数が7日のとき' do
-      let!(:price_code) { Movie::CHILDREN }
+      let!(:price) { ChildrenPrice.new }
       let!(:days_rented) { 7 }
 
       it 'レンタル料金が7.5ドルになること' do
