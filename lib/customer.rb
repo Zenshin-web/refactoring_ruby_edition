@@ -11,36 +11,36 @@ class Customer
   end
 
   def statement
-    total_amount, frequent_renter_points = 0, 0
     result = "Rental Record for #{@name}\n"
     @rentals.each do |element|
-      this_amount = 0
-
-      # 各行の金額を計算
-      case element.movie.price_code
-      when Movie::REGULAR
-        this_amount += 2
-        this_amount += (element.days_rented - 2) * 1.5 if element.days_rented > 2
-      when Movie::NEW_RELEASE
-        this_amount += element.days_rented * 3
-      when Movie::CHILDREN
-        this_amount += 1.5
-        this_amount += (element.days_rented - 3) * 1.5 if element.days_rented > 3
-      end
-
-      # レンタルポイントを加算
-      frequent_renter_points += 1
-      # 新作2日間レンタルでボーナス点を加算
-      if element.movie.price_code == Movie::NEW_RELEASE && element.days_rented > 1
-        frequent_renter_points += 1
-      end
       # このレンタルの料金を表示
-      result += "\t" + element.movie.title + "\t" + this_amount.to_s + "\n"
-      total_amount += this_amount
+      result += "\t" + element.movie.title + "\t" + element.charge.to_s + "\n"
     end
     # フッター行を追加
-    result += "Amount owed is #{total_amount}\n"
-    result += "You earned #{frequent_renter_points} frequent renter points"
+    result += "Amount owed is #{total_charge}\n"
+    result += "You earned #{total_frequent_renter_points} frequent renter points"
     result
+  end
+
+  def html_statement
+    result = "<h1>Rental Record for <em>#{@name}</em></h1>\n"
+    @rentals.each do |element|
+      # このレンタルの料金を表示
+      result += "<p>\t" + element.movie.title + ": " + element.charge.to_s + "<br></p>\n"
+    end
+    # フッター行を追加
+    result += "<p>You owe <em>#{total_charge}</em></p>\n"
+    result += "<p>On this rental You earned " + "<em>#{total_frequent_renter_points}</em> " + "frequent renter points</p>"
+    result
+  end
+
+  private
+
+  def total_frequent_renter_points
+    @rentals.inject(0) { |sum, rental| sum + rental.frequent_renter_points }
+  end
+
+  def total_charge
+    @rentals.inject(0) { |sum, rental| sum + rental.charge }
   end
 end
