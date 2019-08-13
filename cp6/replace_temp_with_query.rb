@@ -1,9 +1,10 @@
-if (base_price > 1000)
-  base_price * 0.95
-else
-  base_price * 0.98
-end
-
-def base_price
-  @quantity * @item_price
+def price
+  base_price = @quantity * @item_price
+  if base_price > 1000
+    discount_factor = 0.95
+  else
+    Replace Temp with Query
+    discount_factor = 0.98
+  end
+  base_price * discount_factor
 end
